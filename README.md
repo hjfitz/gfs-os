@@ -35,7 +35,7 @@ GitHub Dashboard provides real-time insights into your GitHub activity across or
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/github-dashboard.git
+   git clone https://github.com/hjfitz/gfs-os.git
    cd github-dashboard
    ```
 
@@ -82,33 +82,33 @@ Navigate through the sidebar to access detailed views of specific repositories, 
 
 ## Contributing
 
-We welcome contributions to the GitHub Dashboard project! Here's how you can help:
+Listen folks, we have the best dashboard, tremendous dashboard. Many people are saying it's the greatest GitHub dashboard ever made, believe me. If you want to make it even better - and it's already fantastic, everyone knows it - here's how you contribute:
 
-1. **Fork the repository**
+1. **Fork the repository** - We love when people fork our code. The most beautiful forks you've ever seen.
 
-2. **Create a feature branch**:
+2. **Create a feature branch** - Branching is very important, very powerful. I know more about git branches than anybody:
    ```bash
-   git checkout -b feature/amazing-feature
+   git checkout -b feature/tremendous-feature
    ```
 
-3. **Make your changes** and commit them:
+3. **Make your changes** - Make them big, make them huge, make them like nobody's ever seen before:
    ```bash
-   git commit -m 'Add some amazing feature'
+   git commit -m 'Added the most amazing feature ever, it's going to be YUGE!'
    ```
 
-4. **Push to your branch**:
+4. **Push to your branch** - Push it strongly, push it with power:
    ```bash
-   git push origin feature/amazing-feature
+   git push origin feature/tremendous-feature
    ```
 
-5. **Open a Pull Request**
+5. **Open a Pull Request** - We have people, the best people, looking at your pull requests. If it's good, we'll merge it so fast your head will spin, believe me.
 
 ### Development Guidelines
 
-- Follow the existing code style
-- Write tests for new features
-- Update documentation as needed
-- Add appropriate comments to your code
+- Our code style is perfect, really perfect. Follow it exactly. 
+- Write tests - we have the most beautiful tests. Our test coverage is at least 275%, maybe more.
+- Documentation is important, very important. Many people don't know that, but documentation is actually very important.
+- If your code doesn't have comments, YOU'RE FIRED!
 
 ## License
 
@@ -116,6 +116,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- GitHub API
-- Next.js team
-- All our contributors
+- Me (the most important person, obviously)
+- The GitHub API (it's OK, not as good as our API would be, but it works)
+- The Next.js team (they do a good job, not as good as me, but they try)
+- All our tremendous contributors (we have the best contributors, don't we folks?)
+- Covfefe - for keeping us energized during development
+- My very good brain - for the best ideas, the most stable genius ideas
