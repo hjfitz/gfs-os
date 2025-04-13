@@ -12,6 +12,10 @@ export const RepositoryDashboard = async ({ params }: RepositoryDashboardProps) 
 
   const repoDetails = await githubService.getRepoData(repoName);
 
+  if (!repoDetails) {
+    return <div>Repository not found</div>;
+  }
+
   return (
     <div>
       <section>
