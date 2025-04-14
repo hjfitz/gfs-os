@@ -67,3 +67,36 @@ export type GithubWorkflowRun = {
   html_url: string
   updated_at: string
 }
+
+export type GithubPullRequestData = {
+  html_url: string
+  id: number
+  number: number
+  state: string
+  title: string
+  created_at: string
+  updated_at: string
+  additions: number
+  deletions: number
+  user: {
+    login: string
+    avatar_url: string
+  }
+  repo: {
+    name: string
+  }
+}
+
+export type PullRequest = {
+  title: string
+  number: number
+  isDraft: boolean
+  isReady: boolean
+  author: {
+    login: string
+    avatarUrl: string
+  }
+  createdAt: string
+  additions: number
+  deletions: number
+}
