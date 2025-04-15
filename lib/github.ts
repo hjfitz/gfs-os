@@ -32,7 +32,7 @@ class GithubAPI {
   }
 
   public async getPullRequest(repoName: string): Promise<GithubPullRequestData[]> {
-    return this.get<GithubPullRequestData[]>(`https://api.github.com/repos/${this.org}/${repoName}/pulls?state=all`)
+    return this.get<GithubPullRequestData[]>(`https://api.github.com/repos/${this.org}/${repoName}/pulls`) //?state=all`)
   }
 }
 
