@@ -1,7 +1,7 @@
 import type { GithubOrgReposResponseDTO, GithubOrgRepo } from "./dto/org-repos"
 import type { GithubPullRequestResponseDTO } from "./dto/pull-request"
 import type { GithubWorkflowRunsResponseDTO } from "./dto/workflow-run"
-
+import type { GithubOrgWorkflowJobsResponseDTO } from "./dto/workflow-jobs"
 export class GithubAPI {
     constructor(private readonly token: string, private readonly org: string) { }
   
@@ -21,7 +21,7 @@ export class GithubAPI {
     }
   
     public async getPullRequests(repoName: string): Promise<GithubPullRequestResponseDTO> {
-      return this.get<GithubPullRequestResponseDTO>(`https://api.github.com/repos/${this.org}/${repoName}/pulls?state=all`)
+      return this.get<GithubPullRequestResponseDTO>(`https://api.github.com/repos/${this.org}/${repoName}/pulls`)
     }
   
     public async getWorkflows(repoName: string): Promise<GithubWorkflowRunsResponseDTO> {
@@ -32,8 +32,7 @@ export class GithubAPI {
       return this.get<GithubOrgRepo>(`https://api.github.com/repos/${this.org}/${repoName}`)
     }
   
-    // this is a dupe - how the fuck did this happen?
-    public async getPullRequest(repoName: string): Promise<GithubPullRequestResponseDTO> {
-      return this.get<GithubPullRequestResponseDTO>(`https://api.github.com/repos/${this.org}/${repoName}/pulls`)
+    public async getWorkflowJobs(repoName: string, workflowRunId: number): Promise<GithubOrgWorkflowJobsResponseDTO> {
+      return this.get<GithubOrgWorkflowJobsResponseDTO>(`https://api.github.com/repos/${this.org}/${repoName}/actions/runs/${workflowRunId}/jobs`)
     }
   }
