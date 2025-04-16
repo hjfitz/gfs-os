@@ -30,29 +30,6 @@ export type RepoData = {
   }
 }
 
-export type GithubRepo = {
-  id: number
-  name: string
-  owner: {
-    login: string
-  }
-  description: string
-  language: string
-  pushed_at: string
-  default_branch: string
-  // there are other properties - but we don't care for them
-}
-
-export type GithubPullRequest = {
-  state: string
-  user: {
-    login: string
-  }
-  title: string
-  updated_at: string
-  html_url: string
-}
-
 export type GithubWorkflow = {
   total_count: number
   workflow_runs: GithubWorkflowRun[]
@@ -78,25 +55,6 @@ export type GithubWorkflowRun = {
   
 }
 
-export type GithubPullRequestData = {
-  html_url: string
-  id: number
-  number: number
-  state: string
-  title: string
-  created_at: string
-  updated_at: string
-  additions: number
-  deletions: number
-  user: {
-    login: string
-    avatar_url: string
-  }
-  repo: {
-    name: string
-  }
-}
-
 export type PullRequest = {
   title: string
   number: number
@@ -107,8 +65,6 @@ export type PullRequest = {
     avatarUrl: string
   }
   createdAt: string
-  additions: number
-  deletions: number
 }
 
 
