@@ -14,7 +14,7 @@ export const WorkflowStepsList = ({ steps }: WorkflowStepsListProps) => {
     <div className="space-y-2">
       {steps.map((step) => (
         <div
-          key={step.id}
+          key={step.id + step.name}
           className="flex items-center justify-between p-3 bg-zinc-900/50 rounded-md border border-zinc-800/50"
         >
           <div className="flex items-center gap-3">
