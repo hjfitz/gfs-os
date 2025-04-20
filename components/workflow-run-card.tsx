@@ -2,15 +2,17 @@ import { formatDistanceToNow } from "date-fns"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { CheckCircle, XCircle, Clock, AlertTriangle, GitBranch, GitCommit, User } from "lucide-react"
-import { WorkflowJobsList } from "@/components/workflows-jobs-list"
+import { CheckCircle, XCircle, Clock, AlertTriangle, GitBranch, GitCommit, User, ExternalLink } from "lucide-react"
+import { WorkflowJobsList } from "@/components/workflow-jobs-list"
+import { WorkflowLogsButton } from "@/components/workflow-logs-button"
+import Link from "next/link"
 import type { WorkflowRunWithDetails } from "@/lib/types"
 
 interface WorkflowRunCardProps {
   workflowRun: WorkflowRunWithDetails
 }
 
-export const WorkflowRunCard = ({ workflowRun }: WorkflowRunCardProps) => {
+export function WorkflowRunCard({ workflowRun }: WorkflowRunCardProps) {
   const { repo, run, jobs } = workflowRun
 
   // Status icon based on workflow status
@@ -60,8 +62,11 @@ export const WorkflowRunCard = ({ workflowRun }: WorkflowRunCardProps) => {
     }
   }
 
+  // Generate a workflow URL (GitHub format)
+  const workflowUrl = `https://github.com/${repo.owner}/${repo.name}/actions/runs/${run.id}`
+
   return (
-    <Card className="bg-zinc-900/40 border-zinc-800 overflow-hidden">
+    <Card className="bg-zinc-900/40 border-zinc-800 overflow-hidden group">
       <div
         className={`h-1 w-full ${run.status === "completed" && run.conclusion === "success" ? "bg-emerald-500" : run.status === "completed" && run.conclusion === "failure" ? "bg-red-500" : run.status === "in_progress" ? "bg-blue-500" : "bg-yellow-500"}`}
       ></div>
@@ -71,18 +76,50 @@ export const WorkflowRunCard = ({ workflowRun }: WorkflowRunCardProps) => {
           <div className="flex items-center gap-3">
             <StatusIcon />
             <div>
-              <h2 className="text-xl font-bold text-zinc-100 font-mono">{repo.name}</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-bold text-zinc-100 font-mono">{repo.name}</h2>
+                <a
+                  href={workflowUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 transition-colors opacity-0 group-hover:opacity-100"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </div>
               <div className="flex items-center gap-2 text-zinc-400 text-sm mt-1">
-                <span className="font-mono">{run.name}</span>
+                <Link
+                  href={`/workflows/${repo.name}/${run.id}`}
+                  className="font-mono hover:text-blue-400 transition-colors flex items-center"
+                >
+                  <span>{run.name}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="ml-1"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </Link>
                 <span className="text-zinc-600">•</span>
                 <span>Run #{run.runNumber}</span>
               </div>
             </div>
           </div>
 
-          <Badge variant="outline" className={`font-mono text-xs px-3 py-1 ${getStatusClass()}`}>
-            {getStatusText()}
-          </Badge>
+          <div className="flex items-center gap-3">
+            <Badge variant="outline" className={`font-mono text-xs px-3 py-1 ${getStatusClass()}`}>
+              {getStatusText()}
+            </Badge>
+            <WorkflowLogsButton workflowRun={workflowRun} />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -129,7 +166,7 @@ export const WorkflowRunCard = ({ workflowRun }: WorkflowRunCardProps) => {
 
         <div>
           <h3 className="text-lg font-medium text-zinc-200 mb-4">Jobs</h3>
-          <WorkflowJobsList jobs={jobs} />
+          <WorkflowJobsList jobs={jobs} repoName={repo.name} />
         </div>
       </div>
     </Card>

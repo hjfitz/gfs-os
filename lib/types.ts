@@ -91,7 +91,7 @@ export type GithubJobStep = {
   completed_at: string
 }
 
-export interface WorkflowRun {
+export type WorkflowRun = {
   id: number
   name: string
   runNumber: number
@@ -104,7 +104,7 @@ export interface WorkflowRun {
   updatedAt: string
 }
 
-export interface WorkflowStep {
+export type WorkflowStep = {
   id: number
   name: string
   status: "queued" | "in_progress" | "completed"
@@ -112,7 +112,7 @@ export interface WorkflowStep {
   duration: number
 }
 
-export interface WorkflowJob {
+export type WorkflowJob = {
   id: number
   name: string
   status: "queued" | "in_progress" | "completed"
@@ -120,8 +120,15 @@ export interface WorkflowJob {
   steps: WorkflowStep[]
 }
 
-export interface WorkflowRunWithDetails {
+export type WorkflowRunWithDetails = {
   repo: RepoData
   run: WorkflowRun
   jobs: WorkflowJob[]
+}
+
+
+export type WorkflowRunLogs = {
+  name: string
+  status: string
+  logs: string[]
 }

@@ -19,7 +19,7 @@ export const PullRequestsByRepo = async () => {
 
   return (
     <div className="space-y-6">
-      {pullRequestsByRepo.map(({ repo, openPullRequests, pullRequests }) => (
+      {pullRequestsByRepo.filter(({ pullRequests }) => pullRequests.length > 0).map(({ repo, openPullRequests, pullRequests }) => (
         <div key={repo} className="bg-zinc-900/40 border border-zinc-800 rounded-lg overflow-hidden">
           <div className="flex items-center justify-between p-4 border-b border-zinc-800">
             <div className="flex items-center">
@@ -29,7 +29,7 @@ export const PullRequestsByRepo = async () => {
               </div>
             </div>
             <div className="text-zinc-400 text-sm">
-              <span className="font-mono">{openPullRequests}</span> total open
+              <span className="font-mono">{openPullRequests}</span> pending pull {openPullRequests === 1 ? "request" : "requests"}
             </div>
           </div>
 

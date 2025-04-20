@@ -1,6 +1,6 @@
 import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
-import { WorkflowRunsList } from "@/components/workflows-runs-list-server"
+import { WorkflowRunsList } from "@/components/workflow-runs-list-server"
 import { WorkflowsSkeleton } from "@/components/workflows-skeleton"
 import { Suspense } from "react"
 

@@ -1,8 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { Play } from "lucide-react"
-import { WorkflowRunCard } from "@/components/workflow-run-card"
 import { githubService } from "@/lib/github"
-
+import { WorkflowRunsListClient } from "@/components/workflow-runs-list-client"
 export const WorkflowRunsList = async () => {
   const workflowRuns = await githubService.getWorkflowRuns()
 
@@ -18,9 +17,7 @@ export const WorkflowRunsList = async () => {
 
   return (
     <div className="space-y-8">
-      {workflowRuns.map((workflowRun) => (
-        <WorkflowRunCard key={`${workflowRun.repo.name}-${workflowRun.run.id}`} workflowRun={workflowRun} />
-      ))}
+      <WorkflowRunsListClient workflowRuns={workflowRuns} />
     </div>
   )
 }

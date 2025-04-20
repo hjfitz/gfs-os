@@ -1,5 +1,5 @@
 import type { GithubAPI } from "./api"
-import type { RepoData, PullRequest, GithubWorkflowRun, GithubJobs, WorkflowRunWithDetails } from "../types"
+import type { RepoData, PullRequest, WorkflowRunWithDetails, WorkflowRunLogs } from "../types"
 import type { GithubOrgRepo } from "./dto/org-repos"
 import type { GithubPullRequest } from "./dto/pull-request"
 
@@ -104,6 +104,26 @@ export class GithubService {
     return repoInfo
   }
 
+  public async getJobLogs(repoName: string, jobId: number): Promise<string> {
+    const logs = await this.github.getJobLogs(repoName, jobId)
+    return logs
+  } 
+
+  public async getWorkflowRunLogs(repoName: string, workflowRunId: number): Promise<WorkflowRunLogs[]> {
+    const jobs = await this.github.getWorkflowJobs(repoName, workflowRunId)
+
+    return await Promise.all(jobs.jobs.map(async (job) => {
+
+      const rawLogs = await this.github.getJobLogs(repoName, job.id)
+
+      return {
+        name: job.name,
+        status: job.status,
+        logs: rawLogs.split("\n"),
+      }
+    }))
+  }
+
   public async getWorkflowDetails(repo: RepoData): Promise<WorkflowRunWithDetails | null> {
     const workflowsRuns = await this.github.getWorkflows(repo.name)
 
@@ -151,6 +171,8 @@ export class GithubService {
         })),
       })),
     }
+
+    
   }
 
   public async getWorkflowRuns(): Promise<WorkflowRunWithDetails[]> {
