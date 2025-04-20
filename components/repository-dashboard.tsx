@@ -2,6 +2,7 @@ import { githubService } from "@/lib/github";
 import { PullRequestList } from "./pull-request-list";
 import WorkflowRunsList from "./workflow-runs-list";
 import RepositoryDetail from "./repository-detail";
+import { redirectToNotFound } from "@/lib/not-found-redirect";
 
 type RepositoryDashboardProps = {
   params: { repoName: string }
@@ -13,7 +14,7 @@ export const RepositoryDashboard = async ({ params }: RepositoryDashboardProps) 
   const repoDetails = await githubService.getRepoData(repoName);
 
   if (!repoDetails) {
-    return <div>Repository not found</div>;
+    redirectToNotFound("repository-not-found")
   }
 
   return (

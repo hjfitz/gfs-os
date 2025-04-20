@@ -34,37 +34,45 @@ export function DailyDigest({ repos, workflowRuns }: DailyDigestProps) {
 
     if (!failingJob) return []
 
-    // Generate suggestions based on job name
-    if (failingJob.name.toLowerCase().includes("test")) {
-      return [
-        "Check the test logs for specific test failures",
-        "Verify if recent code changes broke existing functionality",
-        "Run the failing tests locally to debug the issue",
-      ]
-    } else if (failingJob.name.toLowerCase().includes("build")) {
-      return [
-        "Look for compilation errors in the build logs",
-        "Check for missing dependencies or version conflicts",
-        "Verify that all imports are correctly resolved",
-      ]
-    } else if (failingJob.name.toLowerCase().includes("lint")) {
-      return [
-        "Review code style and formatting issues",
-        "Run linter locally to identify and fix issues",
-        "Check for unused variables or imports",
-      ]
-    } else if (failingJob.name.toLowerCase().includes("deploy")) {
-      return [
-        "Verify deployment credentials and permissions",
-        "Check if the deployment environment is available",
-        "Review environment variables and configuration",
-      ]
-    } else {
-      return [
-        "Review the job logs for specific error messages",
-        "Check if the failure is related to infrastructure issues",
-        "Verify if similar jobs have failed recently",
-      ]
+
+    const jobName = failingJob.name.toLowerCase()
+    switch (jobName) {
+      case "e2e":
+        return [
+          "Check if the infrastructure is being deployed correctly",
+          "Check if any external services are failing",
+          "Check if the logs for specific test failures",
+        ]
+      case "test":
+        return [
+          "Check the test logs for specific test failures",
+          "Verify if recent code changes broke existing functionality",
+          "Run the failing tests locally to debug the issue",
+        ]
+      case "build":
+        return [
+          "Look for compilation errors in the build logs",
+          "Check for missing dependencies or version conflicts",
+          "Verify that all imports are correctly resolved",
+        ]
+      case "lint":
+        return [
+          "Review code style and formatting issues",
+          "Run linter locally to identify and fix issues",
+          "Check for unused variables or imports",
+        ]
+      case "deploy":
+        return [
+          "Verify terraform is valid",
+          "Check if the remote state is locked",
+          "Review environment variables and configuration",
+        ]
+      default:
+        return [
+          "Review the job logs for specific error messages",
+          "Check if the failure is related to infrastructure issues",
+          "Verify if similar jobs have failed recently",
+        ]
     }
   }
 
@@ -82,12 +90,12 @@ export function DailyDigest({ repos, workflowRuns }: DailyDigestProps) {
       <CardContent>
         <div className="space-y-6">
           {/* Welcome section */}
-          <div className="border-l-2 border-blue-500 pl-4">
+          {/* <div className="border-l-2 border-blue-500 pl-4">
             <h3 className="text-zinc-200 font-medium mb-1">Welcome to GFS OS</h3>
             <p className="text-zinc-400 text-sm">
               Here's your daily overview of GitHub activity across your organization.
             </p>
-          </div>
+          </div> */}
 
           {/* Stats overview */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

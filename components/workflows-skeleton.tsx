@@ -1,6 +1,11 @@
-export const WorkflowsSkeleton = () => (
+
+type WorkflowsSkeletonProps = {
+  count?: number
+}
+
+export const WorkflowsSkeleton = ({ count = 3 }: WorkflowsSkeletonProps) => (
   <div className="space-y-8">
-    {[1, 2, 3].map((i) => (
+    {Array.from({ length: count }).map((_, i) => (
       <div key={i} className="bg-zinc-900/40 border border-zinc-800 rounded-lg overflow-hidden">
         <div className="h-1 w-full bg-zinc-800"></div>
 

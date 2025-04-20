@@ -124,6 +124,51 @@ export class GithubService {
     }))
   }
 
+  public async getWorkflowRun(repoName: string, runId: string | number): Promise<WorkflowRunWithDetails | null> {
+    const workflowsRuns = await this.github.getWorkflows(repoName)
+    const repo = await this.getRepoData(repoName)
+
+    const workflowRun = workflowsRuns.workflow_runs.find((run) => Number(run.id) === Number(runId))
+
+    if (!workflowRun) {
+      return null
+    }
+
+    const jobsData = await this.github.getWorkflowJobs(repoName, Number(runId))
+
+    return {
+      repo,
+      run: {
+        id: workflowRun.id,
+        name: workflowRun.name,
+        runNumber: workflowRun.run_number,
+        status: workflowRun.status as "queued" | "in_progress" | "completed",
+        conclusion: workflowRun.conclusion as "success" | "failure" | "cancelled" | "skipped" | null,
+        branch: workflowRun.head_branch,
+        commitSha: workflowRun.head_sha,
+        triggeredBy: workflowRun?.triggering_actor?.login,
+        createdAt: workflowRun.created_at,
+        updatedAt: workflowRun.updated_at,
+      },
+      jobs: jobsData.jobs.map((job) => ({
+        id: job.id,
+        name: job.name,
+        status: job.status as "queued" | "in_progress" | "completed",
+        conclusion: job.conclusion as "success" | "failure" | "cancelled" | "skipped" | null,
+        steps: job.steps.map((step) => ({
+          id: step.number, // todo: this is fucked somewhere
+          name: step.name,
+          status: step.status as "queued" | "in_progress" | "completed",
+          conclusion: step.conclusion as "success" | "failure" | "cancelled" | "skipped" | null,
+          number: step.number,
+          startedAt: step.started_at,
+          completedAt: step.completed_at,
+          duration: step.completed_at ? new Date(step.completed_at).getTime() - new Date(step.started_at).getTime() : 0,
+        })),
+      })),
+    }
+  }
+
   public async getWorkflowDetails(repo: RepoData): Promise<WorkflowRunWithDetails | null> {
     const workflowsRuns = await this.github.getWorkflows(repo.name)
 
