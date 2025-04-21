@@ -26,54 +26,59 @@ const logs = `2025-04-18T06:09:49.9409303Z Receiving objects:  87% (107/122)
 2025-04-18T06:09:49.9434967Z Resolving deltas: 100% (9/9), done.
 2025-04-18T06:09:49.9436264Z From https://github.com/gfs-hybrid-services/apiky
 2025-04-18T06:09:49.9437814Z  * [new ref]         8dd7494aba8f6997f63a4f9ef239a633c3949d71 -> origin/main
-2025-04-18T06:09:49.9439985Z ##[endgroup]`
+2025-04-18T06:09:49.9439985Z ##[endgroup]`;
 
 function splitTest() {
-	const splitStr = '2025-04-18T06:09:49.9433034Z Resolving deltas:  88% (8/9)'.split(/\s/).filter(Boolean)
-	const relevantWords = splitStr.slice(1, 3)
-	console.log(relevantWords)
+	const splitStr = "2025-04-18T06:09:49.9433034Z Resolving deltas:  88% (8/9)"
+		.split(/\s/)
+		.filter(Boolean);
+	const relevantWords = splitStr.slice(1, 3);
+	console.log(relevantWords);
 }
 
-splitTest()
+splitTest();
 
-const parseFingerprint = (line) => line.split(/\s/).filter(Boolean).slice(1, 3).join(' ')
+const parseFingerprint = (line) =>
+	line.split(/\s/).filter(Boolean).slice(1, 3).join(" ");
 
 /**
  * @param {string} input
  * @returns {Array<{line: string, repetitions: string[]}>}
  */
 function parse(input) {
-	const lines = input.split('\n')
+	const lines = input.split("\n");
 
-	const output = []
+	const output = [];
 	for (let i = 0; i < lines.length; i++) {
-		let windowLength = 2
-		let windowMatches = false
-		output.push({ line: lines[i], repetitions: [] })
+		let windowLength = 2;
+		let windowMatches = false;
+		output.push({ line: lines[i], repetitions: [] });
 		do {
-			const window = lines.slice(i, i + windowLength) // create a window of 2 lines
-			const baselineFingerprint = parseFingerprint(lines[i])
-			windowMatches = window.length !== 1 && window.every((windowLine) => {
-				const fingerprint = parseFingerprint(windowLine)
-				// todo: could probably remove skip the check for idx === i
-				return baselineFingerprint === fingerprint
-			})
-			console.log({ window, i, windowLength, windowMatches })
-			windowLength += 1
+			const window = lines.slice(i, i + windowLength); // create a window of 2 lines
+			const baselineFingerprint = parseFingerprint(lines[i]);
+			windowMatches =
+				window.length !== 1 &&
+				window.every((windowLine) => {
+					const fingerprint = parseFingerprint(windowLine);
+					// todo: could probably remove skip the check for idx === i
+					return baselineFingerprint === fingerprint;
+				});
+			console.log({ window, i, windowLength, windowMatches });
+			windowLength += 1;
 			if (windowMatches) {
-				const line = window[window.length - 1]
-				output[output.length - 1].repetitions.push(line)
+				const line = window[window.length - 1];
+				output[output.length - 1].repetitions.push(line);
 			}
 			// go through the window and check if everything matches
-		} while (windowMatches)
+		} while (windowMatches);
 		// we need to skip i to where we left off. i + (windowLength - 1)
 		if (windowLength !== 2) {
-			i = i + (windowLength - 1)
-			windowLength = 2
+			i = i + (windowLength - 1);
+			windowLength = 2;
 		}
 	}
 
-	console.log(output)
+	console.log(output);
 }
 
-parse(logs)
+parse(logs);
