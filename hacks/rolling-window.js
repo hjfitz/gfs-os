@@ -63,7 +63,6 @@ function parse(input) {
 					// todo: could probably remove skip the check for idx === i
 					return baselineFingerprint === fingerprint;
 				});
-			console.log({ window, i, windowLength, windowMatches });
 			windowLength += 1;
 			if (windowMatches) {
 				const line = window[window.length - 1];
