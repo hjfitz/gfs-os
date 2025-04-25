@@ -82,15 +82,14 @@ export function JobLogsModal({
 						</DialogTitle>
 						<Badge
 							variant="outline"
-							className={`font-mono text-xs ${
-								job.status === "completed" && job.conclusion === "success"
+							className={`font-mono text-xs ${job.status === "completed" && job.conclusion === "success"
 									? "bg-emerald-900/20 text-emerald-400 border-emerald-900/30"
 									: job.status === "completed" && job.conclusion === "failure"
 										? "bg-red-900/20 text-red-400 border-red-900/30"
 										: job.status === "in_progress"
 											? "bg-blue-900/20 text-blue-400 border-blue-900/30"
 											: "bg-yellow-900/20 text-yellow-400 border-yellow-900/30"
-							}`}
+								}`}
 						>
 							{job.status === "completed"
 								? job.conclusion === "success"
@@ -149,10 +148,8 @@ export function JobLogsModal({
 						</div>
 					</div>
 				) : (
-					<div className="bg-zinc-900 border border-zinc-800 rounded-md p-4 font-mono text-xs overflow-auto max-h-[60vh]">
-						<pre className="whitespace-pre-wrap">
-							<LogRenderer logs={filteredLogs} />
-						</pre>
+					<div className="overflow-auto max-h-[60vh]">
+						<LogRenderer logs={filteredLogs} />
 					</div>
 				)}
 			</DialogContent>

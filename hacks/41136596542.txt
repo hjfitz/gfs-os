@@ -1,0 +1,67 @@
+2025-04-25T06:09:59.4231226Z     ***
+2025-04-25T06:09:59.4231438Z 
+2025-04-25T06:09:59.4231768Z [0m[1mPlan:[0m 20 to add, 0 to change, 0 to destroy.
+2025-04-25T06:09:59.4232341Z [0m[0m
+2025-04-25T06:09:59.4232787Z [1mChanges to Outputs:[0m[0m
+2025-04-25T06:09:59.4233462Z   [32m+[0m [0m[1m[0mcloud_run_url[0m[0m       = (known after apply)
+2025-04-25T06:09:59.4234271Z   [32m+[0m [0m[1m[0mcompute_instance_ip[0m[0m = (known after apply)
+2025-04-25T06:09:59.4235177Z   [32m+[0m [0m[1m[0mmongodb_collection[0m[0m  = "upload-service-v2-ci-97e3076"
+2025-04-25T06:09:59.4236187Z   [32m+[0m [0m[1m[0mmongodb_db[0m[0m          = "fenghuang"
+2025-04-25T06:09:59.4237067Z   [32m+[0m [0m[1m[0mmongodb_host[0m[0m        = "fenghuang-1.kinflwe.mongodb.net"
+2025-04-25T06:09:59.4238107Z   [32m+[0m [0m[1m[0mmongodb_port[0m[0m        = 27017
+2025-04-25T06:09:59.4238899Z   [32m+[0m [0m[1m[0mmongodb_username[0m[0m    = "fenghuang-user"
+2025-04-25T06:09:59.4239711Z   [32m+[0m [0m[1m[0msftp_private_key[0m[0m    = (sensitive value)
+2025-04-25T06:09:59.4240698Z   [32m+[0m [0m[1m[0mstorage_bucket[0m[0m      = "gfs-upload-svc-v2-ci-97e3076-storage"
+2025-04-25T06:09:59.6886776Z [0m[1mtls_private_key.sftp_key: Creating...[0m[0m
+2025-04-25T06:10:00.5124280Z [0m[1mgoogle_service_account.pubsub_handler_invoker: Creating...[0m[0m
+2025-04-25T06:10:00.5158444Z [0m[1mgoogle_compute_firewall.sftp_fw: Creating...[0m[0m
+2025-04-25T06:10:00.5219491Z [0m[1mgoogle_service_account.cloudrun_sa: Creating...[0m[0m
+2025-04-25T06:10:00.5299861Z [0m[1mgoogle_pubsub_topic.new_file_topic: Creating...[0m[0m
+2025-04-25T06:10:00.5417104Z [0m[1mgoogle_vpc_access_connector.serverless_connector: Creating...[0m[0m
+2025-04-25T06:10:00.5436700Z [0m[1mgoogle_storage_bucket.sftp_bucket: Creating...[0m[0m
+2025-04-25T06:10:00.5519589Z [0m[1mgoogle_compute_router.nat_router: Creating...[0m[0m
+2025-04-25T06:10:00.5521155Z [0m[1mgoogle_service_account.sftp_sa: Creating...[0m[0m
+2025-04-25T06:10:00.5990593Z [0m[1mgoogle_project_service_identity.pubsub_agent: Creating...[0m[0m
+2025-04-25T06:10:01.3925772Z [0m[1mgoogle_project_service_identity.pubsub_agent: Creation complete after 0s [id=projects/gfs-selector-rest-prod-uk1/services/pubsub.googleapis.com][0m
+2025-04-25T06:10:01.3931488Z [0m[1mgoogle_project_iam_binding.project_token_creator: Creating...[0m[0m
+2025-04-25T06:10:03.2091336Z [0m[1mgoogle_pubsub_topic.new_file_topic: Creation complete after 2s [id=projects/gfs-selector-rest-prod-uk1/topics/upload_server_ci_97e3076.new_file.v1][0m
+2025-04-25T06:10:03.2123809Z [0m[1mgoogle_pubsub_topic_iam_binding.sftp_acc_pubsub: Creating...[0m[0m
+2025-04-25T06:10:03.6217972Z [0m[1mgoogle_storage_bucket.sftp_bucket: Creation complete after 3s [id=gfs-upload-svc-v2-ci-97e3076-storage][0m
+2025-04-25T06:10:06.6704912Z [0m[1mtls_private_key.sftp_key: Creation complete after 7s [id=0fa9cdbcdb128673f449b1b9109c2e350131133a][0m
+2025-04-25T06:10:07.0223917Z [0m[1mgoogle_pubsub_topic_iam_binding.sftp_acc_pubsub: Creation complete after 4s [id=projects/gfs-selector-rest-prod-uk1/topics/upload_server_ci_97e3076.new_file.v1/roles/pubsub.publisher][0m
+2025-04-25T06:10:07.0246651Z [0m[1mgoogle_storage_notification.new_file_notification: Creating...[0m[0m
+2025-04-25T06:10:08.2850927Z [0m[1mgoogle_storage_notification.new_file_notification: Creation complete after 1s [id=gfs-upload-svc-v2-ci-97e3076-storage/notificationConfigs/1][0m
+2025-04-25T06:10:08.7282588Z [0m[1mgoogle_project_iam_binding.project_token_creator: Creation complete after 8s [id=gfs-selector-rest-prod-uk1/roles/iam.serviceAccountTokenCreator][0m
+2025-04-25T06:10:10.5123353Z [0m[1mgoogle_service_account.pubsub_handler_invoker: Still creating... [10s elapsed][0m[0m
+2025-04-25T06:10:10.5162316Z [0m[1mgoogle_compute_firewall.sftp_fw: Still creating... [10s elapsed][0m[0m
+2025-04-25T06:10:10.5213948Z [0m[1mgoogle_service_account.cloudrun_sa: Still creating... [10s elapsed][0m[0m
+2025-04-25T06:10:10.5520291Z [0m[1mgoogle_compute_router.nat_router: Still creating... [10s elapsed][0m[0m
+2025-04-25T06:10:10.5540460Z [0m[1mgoogle_service_account.sftp_sa: Still creating... [10s elapsed][0m[0m
+2025-04-25T06:10:12.1656681Z [0m[1mgoogle_compute_firewall.sftp_fw: Creation complete after 11s [id=projects/gfs-selector-rest-prod-uk1/global/firewalls/gfs-upload-svc-v2-ci-97e3076-sftp-allow-ssh][0m
+2025-04-25T06:10:12.6828053Z [0m[1mgoogle_service_account.pubsub_handler_invoker: Creation complete after 12s [id=projects/gfs-selector-rest-prod-uk1/serviceAccounts/upload-svc2-ci-97e3076-ps@gfs-selector-rest-prod-uk1.iam.gserviceaccount.com][0m
+2025-04-25T06:10:12.7418489Z [0m[1mgoogle_service_account.cloudrun_sa: Creation complete after 12s [id=projects/gfs-selector-rest-prod-uk1/serviceAccounts/upload-svc2-ci-97e3076-cr@gfs-selector-rest-prod-uk1.iam.gserviceaccount.com][0m
+2025-04-25T06:10:12.7440754Z [0m[1mgoogle_storage_bucket_iam_member.cloudrun_gcs_read: Creating...[0m[0m
+2025-04-25T06:10:13.7192406Z [0m[1mgoogle_compute_router.nat_router: Creation complete after 13s [id=projects/gfs-selector-rest-prod-uk1/regions/europe-west2/routers/gfs-upload-svc-v2-ci-97e3076-nat-router][0m
+2025-04-25T06:10:13.7241004Z [0m[1mgoogle_compute_router_nat.nat_config: Creating...[0m[0m
+2025-04-25T06:10:14.5822450Z [0m[1mgoogle_service_account.sftp_sa: Creation complete after 14s [id=projects/gfs-selector-rest-prod-uk1/serviceAccounts/upload-svc2-ci-97e3076-sftp@gfs-selector-rest-prod-uk1.iam.gserviceaccount.com][0m
+2025-04-25T06:10:14.5871616Z [0m[1mgoogle_project_iam_member.sftp_sa_storage: Creating...[0m[0m
+2025-04-25T06:10:14.5954138Z [0m[1mgoogle_compute_instance.sftp_vm: Creating...[0m[0m
+2025-04-25T06:10:18.9526104Z [0m[1mgoogle_storage_bucket_iam_member.cloudrun_gcs_read: Creation complete after 6s [id=b/gfs-upload-svc-v2-ci-97e3076-storage/roles/storage.objectViewer/serviceAccount:upload-svc2-ci-97e3076-cr@gfs-selector-rest-prod-uk1.iam.gserviceaccount.com][0m
+2025-04-25T06:10:21.6317696Z [0m[1mgoogle_project_iam_member.sftp_sa_storage: Creation complete after 7s [id=gfs-selector-rest-prod-uk1/roles/storage.objectAdmin/serviceAccount:upload-svc2-ci-97e3076-sftp@gfs-selector-rest-prod-uk1.iam.gserviceaccount.com][0m
+2025-04-25T06:10:23.7246884Z [0m[1mgoogle_compute_router_nat.nat_config: Still creating... [10s elapsed][0m[0m
+2025-04-25T06:10:24.5962823Z [0m[1mgoogle_compute_instance.sftp_vm: Still creating... [10s elapsed][0m[0m
+2025-04-25T06:10:27.1912244Z [0m[1mgoogle_compute_router_nat.nat_config: Creation complete after 13s [id=gfs-selector-rest-prod-uk1/europe-west2/gfs-upload-svc-v2-ci-97e3076-nat-router/gfs-upload-svc-v2-ci-97e3076-nat-config][0m
+2025-04-25T06:10:34.5973290Z [0m[1mgoogle_compute_instance.sftp_vm: Still creating... [20s elapsed][0m[0m
+2025-04-25T06:10:35.9552190Z [0m[1mgoogle_compute_instance.sftp_vm: Creation complete after 21s [id=projects/gfs-selector-rest-prod-uk1/zones/europe-west1-b/instances/gfs-upload-svc-v2-ci-97e3076-sftp-bb58][0m
+2025-04-25T06:10:36.2146576Z [31m╷[0m[0m
+2025-04-25T06:10:36.2147818Z [31m│[0m [0m[1m[31mError: [0m[0m[1mError creating Connector: googleapi: Error 409: Requested entity already exists[0m
+2025-04-25T06:10:36.2148813Z [31m│[0m [0m
+2025-04-25T06:10:36.2149580Z [31m│[0m [0m[0m  with google_vpc_access_connector.serverless_connector,
+2025-04-25T06:10:36.2150801Z [31m│[0m [0m  on cloud-run.tf line 1, in resource "google_vpc_access_connector" "serverless_connector":
+2025-04-25T06:10:36.2152165Z [31m│[0m [0m   1: resource "google_vpc_access_connector" "serverless_connector" [4m***[0m[0m
+2025-04-25T06:10:36.2153029Z [31m│[0m [0m
+2025-04-25T06:10:36.2153509Z [31;2;4m╵[0m[0m
+2025-04-25T06:10:36.4262815Z time=2025-04-25T06:10:36Z level=error msg=Terraform invocation failed in /github/workspace/iac/projects/gfs-hsci-upload-service-v2
+2025-04-25T06:10:36.4264326Z time=2025-04-25T06:10:36Z level=error msg=1 error occurred:
+2025-04-25T06:10:36.4265707Z 	* [/github/workspace/iac/projects/gfs-hsci-upload-service-v2] exit status 1
+2025-04-25T06:10:36.4266493Z 

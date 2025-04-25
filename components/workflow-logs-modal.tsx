@@ -149,15 +149,14 @@ export const WorkflowLogsModal = ({
 						</DialogTitle>
 						<Badge
 							variant="outline"
-							className={`font-mono text-xs ${
-								run.status === "completed" && run.conclusion === "success"
+							className={`font-mono text-xs ${run.status === "completed" && run.conclusion === "success"
 									? "bg-emerald-900/20 text-emerald-400 border-emerald-900/30"
 									: run.status === "completed" && run.conclusion === "failure"
 										? "bg-red-900/20 text-red-400 border-red-900/30"
 										: run.status === "in_progress"
 											? "bg-blue-900/20 text-blue-400 border-blue-900/30"
 											: "bg-yellow-900/20 text-yellow-400 border-yellow-900/30"
-							}`}
+								}`}
 						>
 							{run.status === "completed"
 								? run.conclusion === "success"
@@ -283,8 +282,8 @@ export const WorkflowLogsModal = ({
 										</div>
 									</CollapsibleTrigger>
 									<CollapsibleContent>
-										<div className="p-4 pt-0 border-t border-zinc-800 mt-4 font-mono text-xs">
-											<LogRenderer logs={step.logs} />
+									<div className="pb-4">
+										<LogRenderer logs={step.logs} />
 										</div>
 									</CollapsibleContent>
 								</Collapsible>
