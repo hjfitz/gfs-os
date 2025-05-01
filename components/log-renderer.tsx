@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { parseWorkflowLogs } from "@/lib/log-parser";
 import {
 	Collapsible,
 	CollapsibleContent,
@@ -16,7 +15,6 @@ import {
 	Info,
 	XCircle,
 } from "lucide-react";
-import { parseAnsi } from "@/lib/log-colorizer";
 import { presentLogs } from "@/lib/log-presenter";
 
 type LogRendererProps = {
@@ -80,35 +78,48 @@ const StatusIcon = ({ status }: StatusIconProps) => {
 	}
 };
 
-type LogChildProps = {
-	className?: string;
-	childLog: {
-		log: Array<{
-			str: string;
-			classes: string;
-		}>;
-	};
+type LogSegmentProps = {
+	str: string;
+	classes: string;
 };
 
-const LogChild = ({ childLog, className }: LogChildProps) => {
+type LogLineProps = {
+	lineNumber: string | number;
+	segments: LogSegmentProps[];
+	className?: string;
+	prefix?: React.ReactNode;
+};
+
+const LogLine = ({ lineNumber, segments, className, prefix }: LogLineProps) => {
 	return (
-		<p className="hover:bg-zinc-700 w-full transition whitespace-pre py-0.5">
-			{childLog.log.map((l) => (
-				<span
-					key={l.str}
-					className={[l.classes, className].join(" ")}
-				>
-					{l.str}
-				</span>
-			))}
-		</p>
+		<div className={`hover:bg-zinc-700 w-full transition whitespace-pre py-0.5 flex ${className || ""}`}>
+			<span className="text-zinc-500 inline-block w-8 text-right mr-4 flex-shrink-0">{lineNumber}</span>
+			<div className="flex-grow flex">
+				{prefix}
+				<div className="flex-grow">
+					{segments.map((segment, idx) => (
+						<span key={`${segment.str}-${idx}`} className={segment.classes}>
+							{segment.str}
+						</span>
+					))}
+				</div>
+			</div>
+		</div>
 	);
 };
+
+// Helper function to create a consistent unique key from log content
+function createLogKey(log: LogSegmentProps[], prefix: string = ""): string {
+	const contentHash = log.map(segment => segment.str).join("").slice(0, 20);
+	return `${prefix}-${contentHash}`;
+}
 
 export const LogRenderer = ({ logs }: LogRendererProps) => {
 	const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 	// todo: hydrate log parents with log results
 	const parsedBetterLogs = presentLogs(logs);
+
+	console.log(JSON.stringify(parsedBetterLogs[0], null, 2));
 
 	const toggleSection = (idx: string) => {
 		setOpenSections((curOpenSections) => ({
@@ -119,8 +130,8 @@ export const LogRenderer = ({ logs }: LogRendererProps) => {
 
 	return (
 		<div className="pt-0 border-zinc-800 font-mono text-xs">
-			{parsedBetterLogs.map((jobGroup, idx) => {
-				const parentKey = `${jobGroup.rawName}${idx}`;
+			{parsedBetterLogs.map((jobGroup, jobIdx) => {
+				const parentKey = `job-${jobIdx}-${jobGroup.rawName}`;
 				return (
 					<Collapsible
 						key={parentKey}
@@ -142,39 +153,53 @@ export const LogRenderer = ({ logs }: LogRendererProps) => {
 								</span>
 							</div>
 						</CollapsibleTrigger>
-						<CollapsibleContent className="pl-8 py-1">
-							{jobGroup.children.map((childLog, cIdx) => {
-								const childKey = `${idx}${childLog}${cIdx}`;
+						<CollapsibleContent className="pl-0 py-1">
+							{jobGroup.children.map((childLog, cIdx, arr) => {
+								const baseLineNumber = cIdx + 1;
+								const lineNumberOffset = arr
+									.slice(0, cIdx)
+									.map((gr) => gr.children.length)
+									.reduce((acc, cur) => acc + cur, 0);
+								const lineNum = baseLineNumber + lineNumberOffset;
+								const childKey = `child-${jobIdx}-${cIdx}`;
+								
 								if (!childLog.children.length) {
-									return <LogChild childLog={childLog} />;
+									return <LogLine 
+										key={`line-${jobIdx}-${cIdx}`}
+										lineNumber={lineNum} 
+										segments={childLog.log} 
+									/>;
 								}
+								
 								return (
 									<Collapsible
-										key={childLog.log.join("")}
+										key={`collapsible-${jobIdx}-${cIdx}`}
 										open={openSections[childKey]}
 										onOpenChange={() => toggleSection(childKey)}
 									>
-										<CollapsibleTrigger className="flex w-full text-left hover:bg-zinc-700">
-											{openSections[childKey] ? (
-												<ChevronDown className="h-4 w-4 text-zinc-400 mr-2" />
-											) : (
-												<ChevronRight className="h-4 w-4 text-zinc-400 mr-2" />
-											)}
-											<LogChild childLog={childLog} />
+										<CollapsibleTrigger className="w-full text-left">
+											<LogLine
+												lineNumber={lineNum}
+												segments={childLog.log}
+												prefix={openSections[childKey] ? 
+													<ChevronDown className="h-4 w-4 text-zinc-400 mr-2" /> : 
+													<ChevronRight className="h-4 w-4 text-zinc-400 mr-2" />
+												}
+											/>
 										</CollapsibleTrigger>
 										<CollapsibleContent>
-											{childLog.children.map((log) => (
-												<p
-													className="pl-6 hover:bg-zinc-800"
-													key={log.join("")}
-												>
-													{log.map((l) => (
-														<span key={l.str} className={l.classes}>
-															{l.str}
-														</span>
-													))}
-												</p>
-											))}
+											{childLog.children.map((log, logIdx) => {
+												const lowestLineNum = lineNum + logIdx + 1;
+												return (
+													<LogLine
+														key={`inner-${jobIdx}-${cIdx}-${logIdx}`}
+														lineNumber={lowestLineNum}
+														segments={log}
+														className="pl-0"
+														prefix={<div className="w-6" />}
+													/>
+												);
+											})}
 										</CollapsibleContent>
 									</Collapsible>
 								);
